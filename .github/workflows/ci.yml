@@ -9,8 +9,10 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # PR revisions may supersede older PR work, but every main push retains
+  # its own complete compatibility evidence (pending runs must not collide).
+  group: ci-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:
@@ -20,6 +22,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         racket-version: ["9.0", "9.3"]
+        # Fast PR feedback: latest Racket on all three OSes, legacy 9.0
+        # on Linux. Every main push still exercises the full 3 x 2 matrix.
+        exclude: ${{ fromJSON(github.event_name == 'pull_request' && '[{"os":"windows-latest","racket-version":"9.0"},{"os":"macos-latest","racket-version":"9.0"}]' || '[]') }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
