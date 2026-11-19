@@ -1,7 +1,5 @@
 # Switchboard
 
-**支持：**[问题与反馈](https://github.com/turlamai/switchboard/issues) · [当前交付策略](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.zh-CN.md)
-
 **一次调用，接通所有模型——chat、工具调用与 embeddings 的统一 Racket API。**
 
 [![CI](https://github.com/turlamai/switchboard/actions/workflows/ci.yml/badge.svg)](https://github.com/turlamai/switchboard/actions/workflows/ci.yml) ![Racket](https://img.shields.io/badge/Racket-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
